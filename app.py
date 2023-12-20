@@ -86,6 +86,9 @@ def waitingscreen():
     playedusers.append("me")
     if len(playedusers) == len(users):
         roundnumber += 1
+        if roundnumber > 10:
+            socketio.emit('ready_to_play', {'location': url_for('final_screen')})
+            return redirect('/final_screen')
         socketio.emit('ready_to_play', {'location': url_for('game_screen')})
         playedusers = []
         return redirect('/game_screen')
@@ -137,8 +140,8 @@ def redirect_all():
 def final_screen():
     return render_template('finalscreen.html', userpoints = userpoints)
 
-# if __name__ == '__main__':
-#     socketio.run(app, port=int(os.environ.get("PORT", os.environ.get("SPOTIPY_REDIRECT_URI", 8080).split(":")[-1])))
-
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, port=int(os.environ.get("PORT", os.environ.get("SPOTIPY_REDIRECT_URI", 8080).split(":")[-1])))
+
+# if __name__ == '__main__':
+#     socketio.run(app)
