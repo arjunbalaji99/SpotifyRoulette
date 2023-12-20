@@ -140,8 +140,8 @@ def redirect_all():
 def final_screen():
     return render_template('finalscreen.html', userpoints = userpoints)
 
-if __name__ == '__main__':
-    socketio.run(app, port=int(os.environ.get("PORT", os.environ.get("SPOTIPY_REDIRECT_URI", 8080).split(":")[-1])))
-
 # if __name__ == '__main__':
-#     socketio.run(app)
+#     socketio.run(app, port=int(os.environ.get("PORT", os.environ.get("SPOTIPY_REDIRECT_URI", 8080).split(":")[-1])))
+
+if __name__ == '__main__':
+    socketio.run(app)
