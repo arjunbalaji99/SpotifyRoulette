@@ -1,0 +1,4 @@
+gunicorn==19.7.1
+spotipy==2.23.0
+Flask==2.2.5
+flask_session==0.5.0

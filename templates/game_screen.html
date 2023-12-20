@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> current round: {{ roundnumber }}</h1>
+    <h2>playlist name: {{playlist_name}}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Artist</th>
+                <th>Album</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for track in tracks_info %}
+                <tr>
+                    <td>{{ track['name'] }}</td>
+                    <td>{{ track['artist'] }}</td>
+                    <td>{{ track['album'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form method="post" action="{{ url_for('calculatepoints') }}">
+        <label for="user">Choose a user:</label>
+        <select id="user" name="user">
+            {% for user in users %}
+            <option value="{{ user }}">{{ user }}</option>
+            {% endfor %}
+        </select>
+        <br>    
+        <button type="submit">Submit</button>
+    </form>
+    <h2>Players: </h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for username, points in userpoints.items() %}
+                <tr>
+                    <td>{{ username }}</td>
+                    <td>{{ points }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
