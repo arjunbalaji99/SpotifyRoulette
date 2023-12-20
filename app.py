@@ -3,7 +3,7 @@
 import os
 from flask import Flask, session, request, redirect, render_template, url_for
 from flask_session import Session
-from flask_socketio import SocketIO, emit
+# from flask_socketio import SocketIO, emit
 import spotipy
 import random
 
@@ -12,7 +12,7 @@ app.config['SECRET_KEY'] = os.urandom(64)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SESSION_FILE_DIR'] = './.flask_session/'
 Session(app)
-socketio = SocketIO(app)
+# socketio = SocketIO(app)
 
 gameinprogress = False
 users = []
@@ -45,7 +45,7 @@ def index():
         users.append(spotify.me()["display_name"])
         userplaylists[spotify.me()["display_name"]] = spotify.current_user_playlists()
         userpoints[spotify.me()["display_name"]] = 0
-        socketio.emit('refresh_page')
+        # socketio.emit('refresh_page')
         
     if gameinprogress:
         return render_template('gameinprogress.html', name = spotify.me()["display_name"])
@@ -86,7 +86,7 @@ def waitingscreen():
     playedusers.append("me")
     if len(playedusers) == len(users):
         roundnumber += 1
-        socketio.emit('ready_to_play', {'location': url_for('game_screen')})
+        # socketio.emit('ready_to_play', {'location': url_for('game_screen')})
         playedusers = []
         return redirect('/game_screen')
     return render_template('waitingscreen.html')
@@ -124,13 +124,13 @@ def gameinitialize():
             user_playlist_tracks_info.append(track_info)
         trackinfo.append((user_playlist['name'], user_playlist_tracks_info))
     
-    socketio.emit('start_game', {'location': url_for('game_screen')})
+    # socketio.emit('start_game', {'location': url_for('game_screen')})
 
     return redirect('/game_screen')
 
 @app.route('/redirect_all')
 def redirect_all():
-    socketio.emit('redirect_all_clients', {'redirect_url': '/game_screen'})
+    # socketio.emit('redirect_all_clients', {'redirect_url': '/game_screen'})
     return redirect('/')
 
 @app.route('/final_screen')
@@ -141,4 +141,5 @@ def final_screen():
 #     socketio.run(app, port=int(os.environ.get("PORT", os.environ.get("SPOTIPY_REDIRECT_URI", 8080).split(":")[-1])))
 
 if __name__ == '__main__':
-    socketio.run(app)
+    # socketio.run(app)
+    app.run(threaded=True)
