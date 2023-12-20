@@ -3,7 +3,7 @@
 import os
 from flask import Flask, session, request, redirect, render_template, url_for
 from flask_session import Session
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO
 import spotipy
 import random
 
@@ -131,10 +131,6 @@ def gameinitialize():
 
     return redirect('/game_screen')
 
-@app.route('/redirect_all')
-def redirect_all():
-    socketio.emit('redirect_all_clients', {'redirect_url': '/game_screen'})
-    return redirect('/')
 
 @app.route('/final_screen')
 def final_screen():
